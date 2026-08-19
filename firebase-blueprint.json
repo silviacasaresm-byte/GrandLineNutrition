@@ -1,0 +1,142 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "Perfil de Usuario",
+      "description": "Información del usuario y configuración general de la dieta",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "ID del usuario autenticado"
+        },
+        "email": {
+          "type": "string",
+          "description": "Correo electrónico del usuario"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Nombre de pirata o usuario"
+        },
+        "targetCalories": {
+          "type": "number",
+          "description": "Calorías objetivo diarias"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Fecha y hora de actualización ISO"
+        }
+      },
+      "required": ["userId", "email"]
+    },
+    "UserDiet": {
+      "title": "Dieta Quincenal del Usuario",
+      "description": "Plan nutricional quincenal de 7 días duplicables",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "ID del usuario propietario"
+        },
+        "weekDays": {
+          "type": "array",
+          "description": "Días de la semana con sus respectivas tomas"
+        },
+        "multiplier": {
+          "type": "number",
+          "description": "Multiplicador de ciclo (por defecto 2 para quincena)"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Fecha y hora de actualización ISO"
+        }
+      },
+      "required": ["userId", "weekDays"]
+    },
+    "BioimpedanceItem": {
+      "title": "Registro de Bioimpedancia",
+      "description": "Métricas corporales individuales con 12 variables clínicas",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Identificador único del registro"
+        },
+        "userId": {
+          "type": "string",
+          "description": "ID del usuario propietario"
+        },
+        "date": {
+          "type": "string",
+          "description": "Fecha del pesaje (YYYY-MM-DD)"
+        },
+        "weightKg": {
+          "type": "number",
+          "description": "Peso corporal en kg"
+        },
+        "bodyFatPercent": {
+          "type": "number",
+          "description": "Porcentaje de grasa corporal"
+        },
+        "muscleMassKg": {
+          "type": "number",
+          "description": "Masa muscular en kg"
+        },
+        "visceralFatLevel": {
+          "type": "number",
+          "description": "Nivel de grasa visceral"
+        },
+        "waterPercent": {
+          "type": "number",
+          "description": "Porcentaje de agua corporal"
+        },
+        "boneMassKg": {
+          "type": "number",
+          "description": "Masa ósea en kg"
+        },
+        "bmrKcal": {
+          "type": "number",
+          "description": "Tasa metabólica basal"
+        },
+        "bodyAgeYears": {
+          "type": "number",
+          "description": "Edad metabólica"
+        },
+        "proteinPercent": {
+          "type": "number",
+          "description": "Porcentaje de proteína corporal"
+        },
+        "subcutaneousFatPercent": {
+          "type": "number",
+          "description": "Porcentaje de grasa subcutánea"
+        },
+        "fatFreeBodyWeightKg": {
+          "type": "number",
+          "description": "Peso libre de grasa en kg"
+        },
+        "notes": {
+          "type": "string",
+          "description": "Notas clínicas o estado de ayuno"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Fecha de creación"
+        }
+      },
+      "required": ["id", "userId", "date", "weightKg", "bodyFatPercent", "muscleMassKg"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Documento de perfil del usuario"
+    },
+    "/users/{userId}/diet/{dietId}": {
+      "schema": "UserDiet",
+      "description": "Plan de dieta persistente del usuario"
+    },
+    "/users/{userId}/bioimpedance/{recordId}": {
+      "schema": "BioimpedanceItem",
+      "description": "Registros históricos de bioimpedancia del usuario"
+    }
+  }
+}

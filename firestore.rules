@@ -1,0 +1,33 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Global Default Deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // User Profile
+    match /users/{userId} {
+      allow read, write: if isOwner(userId);
+
+      // User's Diet Data
+      match /diet/{dietId} {
+        allow read, write: if isOwner(userId);
+      }
+
+      // User's Bioimpedance Records
+      match /bioimpedance/{recordId} {
+        allow read, write: if isOwner(userId);
+      }
+    }
+  }
+}

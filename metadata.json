@@ -1,0 +1,6 @@
+{
+  "name": "Grand Line Nutrition - One Piece Diet",
+  "description": "App de gestión de dietas determinista quincenal, lista de la compra, bioimpedancia Doctor Chopper y cocina temática One Piece.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
